@@ -32,7 +32,7 @@ public class GereciamentoProdutos {
 
     public Produto buscarProduto(int busca){
         int i; 
-        if (busca >= ID){
+        if (busca < ID){
             return null;
         }
         for(i = 1000; i != ID; i++){
