@@ -35,6 +35,6 @@ public class Produto {
     public void setQuantidade(int quantidade) {this.quantidade = quantidade;} 
     
     public String toString(){
-        return "ID: " + this.id + " - " + "Nome: " + this.nome + " - " + "Categoria: " + this.categoria + " - " + "Preço: R$" + this.preco + " - " + "Validade: " + this.validade + " - " + "Quantidade: " + this.quantidade;
+        return "ID: " + this.id + " - " + "Nome: " + this.nome + "\n" + "Categoria: " + this.categoria + " - " + "Preço: R$" + this.preco + " - " + "Validade: " + this.validade + " - " + "Quantidade: " + this.quantidade  + "\n\n";
     }
 }
