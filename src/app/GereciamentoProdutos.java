@@ -21,10 +21,26 @@ public class GereciamentoProdutos {
         }
     }    
 
-    public void listarProdutos(){
+    public String listarProdutos(){
         int i;
+        String mensagem = ""; 
         for(i = 0; i < this.id; ++i){
-            System.out.println(this.produtos[i].toString());
+            mensagem = mensagem + (this.produtos[i].toString() + "\n");
         }
+        return mensagem;
+    }
+
+    public Produto buscarProduto(int busca){
+        int i; 
+        if (busca >= ID){
+            return null;
+        }
+        for(i = 1000; i != ID; i++){
+            if(busca == this.produtos[i].getId()){
+                return this.produtos[i];
+            }
+        }
+        return null;
     }
 }
+
