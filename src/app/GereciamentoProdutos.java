@@ -31,11 +31,8 @@ public class GereciamentoProdutos {
     }
 
     public Produto buscarProduto(int busca){
-        int i; 
-        if (busca < ID){
-            return null;
-        }
-        for(i = 1000; i != GereciamentoProdutos.ID; i++){
+        int i;
+        for(i = 0; i < this.id; i++){
             if(busca == this.produtos[i].getId()){
                 return this.produtos[i];
             }
