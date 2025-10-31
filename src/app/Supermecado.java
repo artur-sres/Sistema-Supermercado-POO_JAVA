@@ -1,42 +1,86 @@
 package app;
+
+//Bibliotecas utilizadas
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 public class Supermecado {
     public static void main(String[] args) {
         int opcao = 1;
     GereciamentoProdutos gerenciamento = new GereciamentoProdutos();
+    
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) { 
+            System.err.println("Não foi possível carregar o Look and Feel Nimbus."); 
+        }
 
-        //JOptionPane.showMessageDialog(null, "Menu");
-        gerenciamento.adicionarProduto("Água", "Alimento", 3.20, "29/09/2030", 314);
-        gerenciamento.adicionarProduto("Biscoito", "Alimento", 9.20, "17/03/2026", 23);
-        gerenciamento.adicionarProduto("Sorvete", "Alimento", 32.20, "09/11/2025", 23);
-        gerenciamento.adicionarProduto("Leite", "Alimento", 6.20, "02/10/2025", 23);
+        //Produtos para utilizar de exemplos
+        gerenciamento.adicionarProduto("Biscoito Escureto Richester", "Alimento", 2.70, "17/03/2026", 27);
+        gerenciamento.adicionarProduto("Sorvete Laka 1L - Napolitano", "Alimento", 32.99, "09/11/2025", 11);
         
-
-        String nome, categoria, validade, mensagem;
+        String menu = "SELECIONE UMA OPÇÂO PARA PROSSEGUIR:" 
+                    + "\n01 - Adicionar produto." 
+                    + "\n02 - Buscar produto." 
+                    + "\n03 - Listar produtos." 
+                    + "\n04 - Modificar produto." 
+                    + "\n05 - Remover produto.";
+                    
+        //Variaveis de produto
+        String nome, categoria, validade;
         double preco;
-        int quantidade, busca; 
+        int quantidade;
+    
+        //Variaveis auxiliares
         Produto produto;
+        String mensagem;
+        int busca = 0;
+        boolean flag;
 
         while (opcao != 0){
-            opcao = Integer.parseInt(JOptionPane.showInputDialog(null, "Menu\n01 - Adicionar Produto\n02 - Buscar Produtos\n03 - Listar Todos os Produto\n04 - Modificar Produto\n05 - Remover Produto\n00 - Sair"));
+            try {
+                opcao = Integer.parseInt(JOptionPane.showInputDialog(null, menu, "MENU", JOptionPane.DEFAULT_OPTION));
+            } catch (NumberFormatException e) {
+                opcao = 0;
+            }
+
             switch (opcao) {
-                case 01:
-                    nome = JOptionPane.showInputDialog(null, "Digite o nome do produto");
-                    categoria = JOptionPane.showInputDialog(null, "Digite a categoria do produto");
-                    preco = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto custa a unidade do produto?"));
-                    validade = JOptionPane.showInputDialog(null, "Qual a validade do produto?");
-                    quantidade = Integer.parseInt(JOptionPane.showInputDialog(null, "Quantos produtos há em estoque?"));
-                    gerenciamento.adicionarProduto(nome, categoria, preco, validade, quantidade);
+                case 01: //Adicionar produto
+                    nome = JOptionPane.showInputDialog(null, "Digite o nome do produto:", "ADICIONAR NOVO PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                    categoria = JOptionPane.showInputDialog(null, "Digite a categoria do produto", "ADICIONAR NOVO PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                    preco = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto custa a unidade do produto?", "ADICIONAR NOVO PRODUTO", JOptionPane.QUESTION_MESSAGE));
+                    validade = JOptionPane.showInputDialog(null, "Qual a validade do produto?", "ADICIONAR NOVO PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                    quantidade = Integer.parseInt(JOptionPane.showInputDialog(null, "Quantos produtos há em estoque?", "ADICIONAR NOVO PRODUTO", JOptionPane.QUESTION_MESSAGE));
+
+                    try {
+                        gerenciamento.adicionarProduto(nome, categoria, preco, validade, quantidade);
+                    } catch (RuntimeException e) {
+                        mensagem = "<html>Houve um problema ao adicionar seu produto: <font color='red'>" 
+                        + e.getMessage() 
+                        + "</font></html>";
+                        JOptionPane.showMessageDialog(null, mensagem, "ADICIONAR NOVO PRODUTO", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                    JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!", "ADICIONAR NOVO PRODUTO", JOptionPane.INFORMATION_MESSAGE);
                     break;
-                case 02:
-                    busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do produto:"));
+
+                case 02: //Buscar produto
+                    flag = true;
+                    while (flag) { 
+                        try {
+                            busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do produto:", "BUSCAR PRODUTO", JOptionPane.QUESTION_MESSAGE));
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "ID inválido", "BUSCAR PRODUTO", JOptionPane.ERROR_MESSAGE);
+                            continue;
+                        }
+                        flag = false;
+                    }
                     produto = gerenciamento.buscarProduto(busca);
                     if(produto != null){
                         mensagem = produto.toString();
                         JOptionPane.showMessageDialog(null, mensagem);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Produto não encontrado");
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado", "BUSCAR PRODUTO", JOptionPane.INFORMATION_MESSAGE);
                     }
                     break;
 
@@ -65,7 +109,7 @@ public class Supermecado {
                     break;
 
                     case 05:
-                        busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o código do produto que deseja modificar:"));
+                        busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o código do produto que deseja remover:"));
 
                         produto = gerenciamento.buscarProduto(busca);
                         if(produto != null){
@@ -84,4 +128,4 @@ public class Supermecado {
     }
 }
 
-//remover produto
+

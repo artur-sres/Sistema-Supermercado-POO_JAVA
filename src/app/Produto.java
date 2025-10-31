@@ -35,6 +35,10 @@ public class Produto {
     public void setQuantidade(int quantidade) {this.quantidade = quantidade;} 
     
     public String toString(){
-        return "ID: " + this.id + " - " + "Nome: " + this.nome + "\n" + "Categoria: " + this.categoria + " - " + "Validade: " + this.validade + " - " + "Quantidade: " + this.quantidade + "\n" + "Preço: R$" + this.preco + "\n\n";
+        String mensagem = "(" + this.id + ") " + this.nome + " - " + "R$" + String.format("%.2f", this.preco)
+                        + "\nCategoria: " + this.categoria 
+                        + "\nValidade: " + this.validade 
+                        + "\nQuantidade em estoque: " + this.quantidade + "\n";
+        return mensagem;
     }
 }

@@ -1,5 +1,6 @@
 package app;
 
+//Bibliotecas utilizadas
 import javax.swing.JOptionPane;
 
 public class GereciamentoProdutos {
@@ -9,7 +10,7 @@ public class GereciamentoProdutos {
 
     //Construtor
     public GereciamentoProdutos() {
-        this.produtos = new Produto[10];
+        this.produtos = new Produto[5];
         this.id = 0;
     }
 
@@ -19,7 +20,7 @@ public class GereciamentoProdutos {
             this.produtos[this.id] = p;
             ++this.id;
         } else {
-            System.out.println("Quantidade máxima de produtos cadastrados no sistema");
+            throw new RuntimeException("O limite de produtos foi atingido.");
         }
     }    
 
