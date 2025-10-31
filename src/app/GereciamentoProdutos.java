@@ -62,7 +62,7 @@ public class GereciamentoProdutos {
     public void removerProduto(int busca){
         int i;
         for(i = 0; i < this.id; i++){
-            if(busca == this.produtos[i].getId()){ //aMain
+            if(busca == this.produtos[i].getId()){ 
                 if(i == (this.id-1)){
                     this.produtos[i] = null;
                 }
@@ -78,4 +78,3 @@ public class GereciamentoProdutos {
     }
 }
 
-//pai nosso que estas no ceu
