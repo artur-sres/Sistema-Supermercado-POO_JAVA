@@ -25,17 +25,21 @@ public class GereciamentoProdutos {
     }    
 
     public String listarProdutos(){
+        if(this.id == 0){
+            throw new RuntimeException("Nenhum produto cadastrado.");
+        }
         int i;
         String mensagem = ""; 
         for(i = 0; i < this.id; ++i){
             mensagem = mensagem + (this.produtos[i].toString() + "\n");
         }
         return mensagem;
+
     }
 
     public Produto buscarProduto(int busca){
         int i; 
-        if (busca >= ID){
+        if(busca == 0 || busca > ID || this.id == 0){
             return null;
         }
         for(i = 0; i != ID; i++){

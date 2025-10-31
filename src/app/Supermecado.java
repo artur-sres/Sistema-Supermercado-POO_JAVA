@@ -16,8 +16,11 @@ public class Supermecado {
         }
 
         //Produtos para utilizar de exemplos
-        gerenciamento.adicionarProduto("Biscoito Escureto Richester", "Alimento", 2.70, "17/03/2026", 27);
-        gerenciamento.adicionarProduto("Sorvete Laka 1L - Napolitano", "Alimento", 32.99, "09/11/2025", 11);
+        gerenciamento.adicionarProduto("Arroz", "Alimentos", 4.99, "2022-06-30", 50);
+        gerenciamento.adicionarProduto("Feijão", "Alimentos", 4.99, "2022-06-30", 50);
+        gerenciamento.adicionarProduto("Macarrao", "Alimentos", 4.99, "2022-06-30", 50);
+        gerenciamento.adicionarProduto("Leite", "Alimentos", 4.99, "2022-06-30", 50);
+        gerenciamento.adicionarProduto("Cafe", "Alimentos", 4.99, "2022-06-30", 50);
         
         String menu = "SELECIONE UMA OPÇÂO PARA PROSSEGUIR:" 
                     + "\n01 - Adicionar produto." 
@@ -84,28 +87,47 @@ public class Supermecado {
                     }
                     break;
 
-                case 03:
-                    JOptionPane.showMessageDialog(null, gerenciamento.listarProdutos());
+                case 03: //Listar produtos
+                try {
+                    JOptionPane.showMessageDialog(null, gerenciamento.listarProdutos(), "LISTAR PRODUTOS", JOptionPane.INFORMATION_MESSAGE);
+                } catch (RuntimeException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "LISTAR PRODUTOS", JOptionPane.ERROR_MESSAGE);
+                    break;
+                }
                     break;
                 
-                case 04:
-                    busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o código do produto que deseja modificar:"));
-
+                case 04: //Modificar produto
+                    flag = true;
+                    while (flag) { 
+                        try {
+                            busca = Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o ID do produto:", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE));
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "ID inválido", "MODIFICAR PRODUTO", JOptionPane.ERROR_MESSAGE);
+                            continue;
+                        }
+                        flag = false;
+                    }
                     produto = gerenciamento.buscarProduto(busca);
                     if(produto != null){
-                        nome = JOptionPane.showInputDialog(null, "Digite o nome do produto");
-                        categoria = JOptionPane.showInputDialog(null, "Digite a categoria do produto");
-                        preco = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto custa a unidade do produto?"));
-                        validade = JOptionPane.showInputDialog(null, "Qual a validade do produto?");
-                        quantidade = Integer.parseInt(JOptionPane.showInputDialog(null, "Quantos produtos há em estoque?"));
+                        mensagem = produto.toString();
+                        JOptionPane.showMessageDialog(null, mensagem);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Produto não encontrado", "BUSCAR PRODUTO", JOptionPane.INFORMATION_MESSAGE);
+                    }
+
+                    produto = gerenciamento.buscarProduto(busca);
+                    if(produto == null){
+                        break;
+                    }
+                        nome = JOptionPane.showInputDialog(null, "Digite o nome do produto", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                        categoria = JOptionPane.showInputDialog(null, "Digite a categoria do produto", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                        preco = Double.parseDouble(JOptionPane.showInputDialog(null, "Quanto custa a unidade do produto?", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE));
+                        validade = JOptionPane.showInputDialog(null, "Qual a validade do produto?", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE);
+                        quantidade = Integer.parseInt(JOptionPane.showInputDialog(null, "Quantos produtos há em estoque?", "MODIFICAR PRODUTO", JOptionPane.QUESTION_MESSAGE));
 
                         produto = gerenciamento.atualizarProduto(produto, nome, categoria, preco, validade, quantidade);
                         mensagem = "Produto modificado com sucesso\n\n" + produto.toString();
-                        JOptionPane.showMessageDialog(null, mensagem);
-                    } else {
-                        JOptionPane.showMessageDialog(null,"Produto não encontrado");
-                        break;
-                    }
+                        JOptionPane.showMessageDialog(null, mensagem, "MODIFICAR PRODUTO", JOptionPane.INFORMATION_MESSAGE);
                     break;
 
                     case 05:
